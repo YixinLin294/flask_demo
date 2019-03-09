@@ -108,6 +108,10 @@ class User(UserMixin, db.Model):
     def is_followed_by(self, user):
         return self.followers.filter_by(follower_id=user.id).first() is not None
 
+    @property
+    def followed_posts(self):
+        return Post.query.join(Follow, Follow.followed_id == Post.author_id).filter(Follow.follower_id == self.id)
+
 
     @staticmethod
     def generate_fake(count=100):
@@ -261,8 +265,8 @@ class Post(db.Model):
         seed()
         user_count = User.query.count()
         for i in range(count):
-            u = User.query.offset(randint(0, 1)).first()
-            p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 3)), 
+            u = User.query.offset(randint(0, user_count - 1)).first()
+            p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 5)), 
             timestamp=forgery_py.date.date(True),
             author=u)
         db.session.add(p)
