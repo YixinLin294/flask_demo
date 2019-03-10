@@ -13,7 +13,7 @@ def get_user_posts(id):
     page = request.args.get('page', 1, type=int)
     pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
             page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
-            error_out=Flase)
+            error_out=False)
     posts = pagination.items
     prev = None
     if pagination.has_prev:

@@ -18,7 +18,7 @@ def get_comments():
     if pagination.has_next:
         next = url_for('api.get_comments', page=page+1, _external=True)
     return jsonify({
-        'comments': [coment.to_json() for comment in comments],
+        'comments': [comment.to_json() for comment in comments],
         'prev': prev,
         'next': next,
         'count': pagination.total
@@ -59,5 +59,5 @@ def new_post_comment(id):
     db.session.add(comment)
     db.session.commit()
     return jsonify(comment.to_json()), 201, \
-        {'Location': url_for('api.get_comment', id=comment.di, _external=True)}
+        {'Location': url_for('api.get_comment', id=comment.id, _external=True)}
     
