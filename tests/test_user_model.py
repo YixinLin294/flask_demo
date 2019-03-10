@@ -107,7 +107,7 @@ class UserModelTestCase(unittest.TestCase):
         self.assertFalse(u2.change_email(token))
         self.assertTrue(u2.email == 'susan@example.org')
 
-    def test_roles_and_permissinos(self):
+    def test_roles_and_permissions(self):
         u = User(email='john@example.com', password='cat')
         self.assertTrue(u.can(Permission.WRITE_ARTICLES))
         self.assertFalse(u.can(Permission.MODERATE_COMMENTS))
@@ -185,6 +185,16 @@ class UserModelTestCase(unittest.TestCase):
         db.session.delete(u2)
         db.session.commit()
         self.assertTrue(Follow.query.count() == 1)
+
+    def test_to_json(self):
+        u = User(email='john@example.com', password='cat')
+        db.session.add(u)
+        db.session.commit()
+        json_user = u.to_json()
+        expected_keys = ['url', 'username', 'member_since', 'last_seen', 'posts', 'followed_posts', 'post_count']
+        self.assertEqual(sorted(json_user.keys()),
+                sorted(expected_keys))
+        self.assertTrue('api/v1.0/users/' in json_user['url'])
 
 
 
