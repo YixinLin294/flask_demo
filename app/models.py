@@ -95,8 +95,8 @@ class User(UserMixin, db.Model):
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(
                 self.email.encode('utf-8')).hexdigest()
-        # self.followed.append(Follow(followed=self))
-        self.follow(self)
+        self.followed.append(Follow(followed=self))
+        # self.follow(self)
 
     def to_json(self):
         json_user = {
