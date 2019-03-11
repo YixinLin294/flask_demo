@@ -11,9 +11,11 @@ class SeleniumTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # start Firefox
+        # start Chrome
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
         try:
-            cls.client = webdriver.Firefox()
+            cls.client = webdriver.Chrome(chrome_options=options)
         except: 
             pass
 
@@ -42,7 +44,8 @@ class SeleniumTestCase(unittest.TestCase):
             db.session.commit()
 
             # start the Flask server in a thread
-            threading.Thread(target=cls.app.run).start()
+            cls.server_thread = threading.Thread(target=cls.app.run, kwargs={'debug': False})
+            cls.server_thread.start()
 
             # give the server a second to ensure it is up
             time.sleep(1)
@@ -52,7 +55,8 @@ class SeleniumTestCase(unittest.TestCase):
         if cls.client:
             # stop the flask server and the browser 
             cls.client.get('http://localhost:5000/shutdown')
-            cls.client.close()
+            cls.client.quit()
+            cls.server_thread.join()
 
             # destroy database
             db.drop_all()
