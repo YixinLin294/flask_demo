@@ -1,3 +1,8 @@
 -r common.txt
 ForgeryPy==0.1
+Pygments==2.3.1
+colorama==0.4.1
+coverage==4.5.2
+httpie==1.0.2
+requests==2.21.0
 selenium==2.45.0
