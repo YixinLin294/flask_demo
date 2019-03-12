@@ -66,10 +66,10 @@ class CompatibleSMTPSSLHandler(SMTPHandler):
                     smtp.login(self.username, self.password)
                 smtp.send_message(msg)
                 smtp.quit()
-                print(f'[log_manager.py]  发送邮件给 {self.toaddrs} 成功，用时{round(time.time() - t_start,2)} ,发送的内容是--> {record.msg}                    \033[0;35m!!!请去邮箱检查，可能在垃圾邮件中\033[0m')
+                #print(f'[log_manager.py]  发送邮件给 {self.toaddrs} 成功，用时{round(time.time() - t_start,2)} ,发送的内容是--> {record.msg}                    \033[0;35m!!!请去邮箱检查，可能在垃圾邮件中\033[0m')
                 self._msg_map[record.msg] = time.time()
             except Exception:
                 self.handleError(record)
         else:
             pass
-            print(f'[log_manager.py]  邮件发送太频繁，此次不发送这个邮件内容： {record.msg}    ')
+            #print(f'[log_manager.py]  邮件发送太频繁，此次不发送这个邮件内容： {record.msg}    ')
