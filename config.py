@@ -11,6 +11,7 @@ class Config:
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.163.com'
     MAIL_PORT = os.environ.get('MAIL_PORT') or 465
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') or True
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') or False
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
@@ -54,9 +55,9 @@ class ProductionConfig(Config):
         is_use_ssl = None
         if getattr(cls, 'MAIL_USERNAME', None) is not None:
             credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
-            if getattr(cls, 'MAIL_USE_TLS', None):
+            if cls.MAIL_USE_TLS:
                 secure = ()
-            if getattr(cls, 'MAIL_USE_SSL', None):
+            if cls.MAIL_USE_SSL:
                 is_use_ssl = True
         mail_handler = CompatibleSMTPSSLHandler(
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
