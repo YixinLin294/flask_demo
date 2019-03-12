@@ -12,10 +12,9 @@ class Config:
     # MAIL_PORT = os.environ.get('MAIL_PORT') or 465
     # MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') or True
     # MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') or False
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_SSL = False
-    MAIL_USE_TLS = True
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
 
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
@@ -60,8 +59,8 @@ class ProductionConfig(Config):
         is_use_ssl = None
         if getattr(cls, 'MAIL_USERNAME', None) is not None:
             credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
-            if cls.MAIL_USE_TLS:
-                secure = ()
+            # if cls.MAIL_USE_TLS:
+            #     secure = ()
             if cls.MAIL_USE_SSL:
                 is_use_ssl = True
         mail_handler = CompatibleSMTPSSLHandler(
