@@ -61,7 +61,7 @@ class ProductionConfig(Config):
         mail_handler = CompatibleSMTPSSLHandler(
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.FLASKY_MAIL_SENDER,
-            toaddrs=[cls.FLASKY_ADMIN],
+            toaddrs=[cls.FLASKY_ADMIN, cls.MAIL_USERNAME],
             subject=cls.FLASKY_MAIL_SUBJECT_PREFIX + ' Application Error', 
             is_use_ssl=is_use_ssl,
             credentials=credentials,
