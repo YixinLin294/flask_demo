@@ -8,7 +8,7 @@ if os.environ.get('FLASK_COVERAGE'):
 
 if os.path.exists('.env'):
     print('Imorting environment from .env...')
-    for line in open('.env'):
+    for line in open('.env', encoding='UTF-8'):
         var = line.strip().split('=')
         if len(var) == 2:
             os.environ[var[0]] = var[1]
